@@ -1,0 +1,27 @@
+{
+  "name": "Talvio Pixel Relic #5443",
+  "description": "Talvio Pixel Relic #5443 \u2014 a unique 16-bit pixel fox from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "images/5443.png",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Fox"
+    },
+    {
+      "trait_type": "Tier",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Deep Navy"
+    },
+    {
+      "trait_type": "Palette",
+      "value": "Rose"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Silver Star"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Talvio Pixel Relic #4626",
+  "description": "Talvio Pixel Relic #4626 \u2014 a unique 16-bit pixel raven from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "images/4626.png",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Raven"
+    },
+    {
+      "trait_type": "Tier",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Forest Night"
+    },
+    {
+      "trait_type": "Palette",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Feather"
+    }
+  ]
+}

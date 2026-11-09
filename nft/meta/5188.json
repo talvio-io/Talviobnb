@@ -1,0 +1,27 @@
+{
+  "name": "Talvio Pixel Relic #5188",
+  "description": "Talvio Pixel Relic #5188 \u2014 a unique 16-bit pixel deer from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "images/5188.png",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Deer"
+    },
+    {
+      "trait_type": "Tier",
+      "value": "Uncommon"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Midnight"
+    },
+    {
+      "trait_type": "Palette",
+      "value": "Shadow"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Silver Star"
+    }
+  ]
+}
