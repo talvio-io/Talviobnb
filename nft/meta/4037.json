@@ -1,0 +1,27 @@
+{
+  "name": "Talvio Pixel Relic #4037",
+  "description": "Talvio Pixel Relic #4037 \u2014 a unique 16-bit pixel owl from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "images/4037.png",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Owl"
+    },
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Navy Teal"
+    },
+    {
+      "trait_type": "Palette",
+      "value": "Violet"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Silver Star"
+    }
+  ]
+}
