@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Withdraw — Talvio Pixel Relic (BNB Chain)</title>
+<style>
+:root{color-scheme:dark;--bg:#070b16;--panel:#111827;--teal:#2dd4bf;--text:#e8f0f2;--muted:#9fb0b8;--line:#1f3a44;--green:#a3e635}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,sans-serif}.wrap{width:min(760px,calc(100% - 32px));margin:48px auto}.card{background:var(--panel);border:1px solid var(--line);padding:24px;margin:18px 0;border-radius:8px}h1,h2{line-height:1.2}h1{color:var(--teal)}p{color:var(--muted)}.btn{border:1px solid var(--teal);background:#0f2a2e;color:var(--text);padding:12px 18px;border-radius:5px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}input{width:100%;background:#070b16;border:1px solid var(--line);color:var(--text);font:inherit;padding:12px;border-radius:5px;margin:8px 0 14px}.status{padding:12px;border:1px solid var(--line);border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere}.small{font-size:13px}a{color:var(--teal)}label{font-weight:700;display:block}.stat-row{display:flex;gap:12px;flex-wrap:wrap}.stat{flex:1;min-width:120px;background:#070b16;border:1px solid var(--line);padding:12px;border-radius:5px}.stat b{display:block;font-size:20px;color:var(--green)}.stat span{font-size:13px;color:var(--muted)}.livedot{color:var(--green)}pre{white-space:pre-wrap;word-break:break-word;background:#070b16;border:1px solid var(--line);padding:12px;border-radius:5px;font-size:13px;color:var(--text)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+</head>
+<body><main class="wrap">
+<h1>Withdraw mint fees</h1>
+<p>Owner-only. Sends the whole BNB balance held in the Talvio Pixel Relic contract (BNB Smart Chain, chain 56) to the owner wallet. Mint fees are held in the contract (first 777 mints free for Agent ID holders, then 0.0015 BNB per mint), so this is how the owner collects them — it reverts if the balance is empty.</p>
+<div class="card">
+  <b>Contract: (not deployed on BNB yet — paste the new address after deploy)</b>
+  <p>Network: BNB Smart Chain (56). Only the owner wallet can withdraw. Review the transaction details in your wallet before approving.</p>
+  <button class="btn" id="connect">Connect Wallet</button>
+  <div id="walletStatus" class="status" style="margin-top:14px">Not connected.</div>
+</div>
+<div class="card">
+  <h2>Live withdraw stats <span class="livedot" id="wdLiveDot">● LIVE</span></h2>
+  <div class="stat-row">
+    <div class="stat"><b id="statBalance">…</b><span>BNB in contract</span></div>
+    <div class="stat"><b id="statMinted">…</b><span>Minted / 7,777</span></div>
+    <div class="stat"><b id="statOwner">…</b><span>Owner</span></div>
+  </div>
+  <p id="wdStatsStatus" style="margin-top:12px">Loading live stats from BNB Chain…</p>
+  <button class="btn" id="refreshStats">Refresh</button>
+</div>
+<div class="card">
+  <h2>Withdraw</h2>
+  <p>Withdraws the full contract balance to the owner wallet in one transaction. No amount to enter.</p>
+  <button class="btn" id="withdraw" disabled>Withdraw all BNB to owner</button>
+  <div id="result" class="status" style="margin-top:14px">Connect the owner wallet first.</div>
+</div>
+<div class="card">
+  <h2>Withdraw with an AI agent</h2>
+  <p>Paste your wallet address below — the prompt fills in automatically — then copy it and send it to your AI agent. The agent checks the balance and the owner, then withdraws only if you are the owner and the balance is above zero.</p>
+  <label for="walletPaste">Your wallet address — paste it here</label>
+  <input id="walletPaste" type="text" autocomplete="off" spellcheck="false" placeholder="0x… paste your BNB wallet address">
+  <div id="pasteStatus" class="small" style="margin-bottom:12px">Paste your wallet address and the prompt fills in automatically — then click Copy prompt.</div>
+  <pre id="promptWithdraw">Withdraw all mint fees from the Talvio Pixel Relic NFT contract on BNB Smart Chain (chain ID 56).
+NFT contract: (not deployed on BNB yet)
+My wallet: [PASTE YOUR WALLET ADDRESS]
+Check the contract BNB balance and owner() first. Only proceed if my wallet is the owner and the balance is above 0 — otherwise stop and tell me why. Call withdraw() with no value. Show me the details first and wait for my approval in the wallet before sending. Never ask for my seed phrase or private key.</pre>
+  <button class="btn" id="copyPrompt" style="margin-top:12px">Copy prompt</button>
+</div>
+<p class="small">This site will never ask for your seed phrase or private key. A withdraw requires your approval in your wallet. Verify the contract on <a href="https://bscscan.com" target="_blank" rel="noopener">BscScan</a> after deploy.</p>
+</main>
+<script>
+(() => {
+  const TALVIO_CONTRACT = ""; // paste the BNB contract address after deploy. Talvio has no contract on any chain yet.
+  const ABI = [
+    "function withdraw()",
+    "function owner() view returns (address)",
+    "function totalMinted() view returns (uint256)"
+  ];
+  const RPCS = ["https://bsc-dataseed.binance.org/", "https://bsc-dataseed1.bnbchain.org/"]; // BNB Smart Chain public RPCs
+  let provider, signer, account, contract, ownerAddr;
+  const $ = id => document.getElementById(id);
+  function rpcPost(url, method, params) {
+    return fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: method, params: params }) })
+      .then(r => { if (!r.ok) throw new Error("RPC " + r.status); return r.json(); })
+      .then(j => { if (!j || j.error) throw new Error("RPC error"); return j.result; });
+  }
+  function readWithFallback(method, params) {
+    let chain = Promise.reject(new Error("no RPC"));
+    RPCS.forEach(url => { chain = chain.catch(() => rpcPost(url, method, params)); });
+    return chain;
+  }
+  function shortAddr(a) { return a ? a.slice(0, 6) + "…" + a.slice(-4) : "…"; }
+  async function refreshStats() {
+    const st = $("wdStatsStatus");
+    if (!TALVIO_CONTRACT) {
+      $("wdLiveDot").textContent = "● OFFLINE";
+      $("statBalance").textContent = "0 BNB";
+      $("statMinted").textContent = "0 / 7,777";
+      $("statOwner").textContent = "…";
+      st.textContent = "Contract not deployed on BNB yet — 0 minted. Paste the contract address after deploy.";
+      updateWithdrawButton();
+      return;
+    }
+    try {
+      const [balHex, mintedHex, ownerHex] = await Promise.all([
+        readWithFallback("eth_getBalance", [TALVIO_CONTRACT, "latest"]),
+        readWithFallback("eth_call", [{ to: TALVIO_CONTRACT, data: "0xa2309ff8" }, "latest"]),
+        readWithFallback("eth_call", [{ to: TALVIO_CONTRACT, data: "0x8da5cb5b" }, "latest"])
+      ]);
+      const bal = ethers.formatEther(BigInt(balHex));
+      const minted = Number(BigInt(mintedHex));
+      ownerAddr = "0x" + ownerHex.slice(-40);
+      $("statBalance").textContent = Number(bal).toLocaleString("en-US", { maximumFractionDigits: 6 }) + " BNB";
+      $("statMinted").textContent = minted.toLocaleString("en-US") + " / 7,777";
+      $("statOwner").textContent = shortAddr(ownerAddr);
+      $("wdLiveDot").textContent = "● LIVE";
+      st.textContent = "Live from BNB Chain — updated " + new Date().toLocaleTimeString("en-GB") + ".";
+      updateWithdrawButton();
+    } catch (e) {
+      $("wdLiveDot").textContent = "● OFFLINE";
+      st.textContent = "Live read unavailable — showing last checked numbers (contract not deployed on BNB yet — 0 minted).";
+    }
+  }
+  function updateWithdrawButton() {
+    const balNum = parseFloat($("statBalance").textContent);
+    const isOwner = account && ownerAddr && account.toLowerCase() === ownerAddr.toLowerCase();
+    $("withdraw").disabled = !(isOwner && balNum > 0);
+    if (!account) $("result").textContent = "Connect the owner wallet first.";
+    else if (!TALVIO_CONTRACT) $("result").textContent = "Contract not deployed on BNB yet — nothing to withdraw.";
+    else if (!isOwner) $("result").textContent = "Connected wallet is not the owner — only the owner can withdraw.";
+    else if (!(balNum > 0)) $("result").textContent = "Balance is 0 BNB — withdraw would revert, nothing to withdraw right now.";
+    else $("result").textContent = "Ready: you are the owner and the contract holds BNB. Review the transaction in your wallet before approving.";
+  }
+  $("refreshStats").onclick = refreshStats;
+  refreshStats();
+  setInterval(refreshStats, 30000);
+  const WD_PROMPT = "Withdraw all mint fees from the Talvio Pixel Relic NFT contract on BNB Smart Chain (chain ID 56).\nNFT contract: (not deployed on BNB yet)\nMy wallet: [PASTE YOUR WALLET ADDRESS]\nCheck the contract BNB balance and owner() first. Only proceed if my wallet is the owner and the balance is above 0 — otherwise stop and tell me why. Call withdraw() with no value. Show me the details first and wait for my approval in the wallet before sending. Never ask for my seed phrase or private key.";
+  function renderPrompt() {
+    var pasted = ($("walletPaste").value || "").trim();
+    var valid = /^0x[0-9a-fA-F]{40}$/.test(pasted);
+    var who = valid ? pasted : (account || "[PASTE YOUR WALLET ADDRESS]");
+    $("promptWithdraw").textContent = WD_PROMPT.split("[PASTE YOUR WALLET ADDRESS]").join(who);
+    var st = $("pasteStatus");
+    if (st) st.textContent = valid ? "Wallet address filled into the prompt — now just copy it." : (account ? "Wallet filled from your connected wallet — now just copy the prompt." : "Paste your wallet address and the prompt fills in automatically — then click Copy prompt.");
+  }
+  $("walletPaste").addEventListener("input", renderPrompt);
+  $("copyPrompt").onclick = async () => {
+    try { await navigator.clipboard.writeText($("promptWithdraw").textContent); }
+    catch(e) { const ta = document.createElement("textarea"); ta.value = $("promptWithdraw").textContent; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+    $("copyPrompt").textContent = "Copied"; setTimeout(() => { $("copyPrompt").textContent = "Copy prompt"; }, 1800);
+  };
+  renderPrompt();
+  function setStatus(id, text) { $(id).textContent = text; }
+  function providerObject() { return window.okxwallet || window.ethereum || null; }
+  $("connect").onclick = async () => {
+    try {
+      const p = providerObject();
+      if (!p) throw new Error("No EVM wallet found. Open this page in a dApp browser.");
+      if (!TALVIO_CONTRACT) { setStatus("walletStatus", "Wallet found, but the Talvio contract is not deployed on BNB yet — paste the contract address after deploy."); return; }
+      provider = new ethers.BrowserProvider(p);
+      await provider.send("eth_requestAccounts", []);
+      signer = await provider.getSigner();
+      account = await signer.getAddress();
+      const network = await provider.getNetwork();
+      if (network.chainId !== 56n) {
+        setStatus("walletStatus", `Wallet connected: ${account}\nSwitch to BNB Smart Chain (56) to continue.`);
+        return;
+      }
+      contract = new ethers.Contract(TALVIO_CONTRACT, ABI, provider);
+      ownerAddr = await contract.owner();
+      setStatus("walletStatus", `Wallet connected to BNB Smart Chain: ${account}\nContract owner: ${ownerAddr}`);
+      renderPrompt();
+      await refreshStats();
+    } catch(e) {
+      setStatus("walletStatus", e.shortMessage || e.message || String(e));
+    }
+  };
+  $("withdraw").onclick = async () => {
+    if (!contract || !signer) return;
+    $("withdraw").disabled = true;
+    try {
+      setStatus("result", "Preparing withdraw. Review your wallet: full contract balance to the owner wallet.");
+      const tx = await contract.connect(signer).withdraw();
+      setStatus("result", `Transaction submitted: ${tx.hash}\nWaiting for BNB Chain confirmation…`);
+      await tx.wait();
+      setStatus("result", "Success: mint fees withdrawn to the owner wallet.");
+      await refreshStats();
+    } catch(e) {
+      $("withdraw").disabled = false;
+      setStatus("result", "Withdraw failed or was canceled: " + (e.shortMessage || e.message || String(e)));
+    }
+  };
+})();
+</script>
+</body></html>
