@@ -1,0 +1,27 @@
+{
+  "name": "Talvio Pixel Relic #2181",
+  "description": "Talvio Pixel Relic #2181 \u2014 a unique 16-bit pixel fox from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "images/2181.png",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Fox"
+    },
+    {
+      "trait_type": "Tier",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Midnight"
+    },
+    {
+      "trait_type": "Palette",
+      "value": "Rose"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Silver Star"
+    }
+  ]
+}
