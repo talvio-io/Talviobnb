@@ -44,9 +44,9 @@ interface IAgentId {
 ///   accumulated fees with withdraw(). Network gas is separate and variable,
 ///   paid to validators.
 /// - Personal wallets only (msg.sender == tx.origin, contract callers rejected).
-/// - $TALV (7.77 trillion supply, 82% to LP) is a separate token plan and
-///   is NOT this contract: this contract mints only the NFT, no $TALV. The
-///   $TALV token contract will be made by the owner themselves.
+/// - $TALV (7.77 trillion supply, 82% to LP) is a separate token contract
+///   (TalvioToken.sol, deployed from step 05 of the deploy console): this
+///   contract mints only the NFT, no $TALV.
 /// - tokenURI = baseURI + tokenId + ".json" (meta files are N.json).
 /// - mintOpen defaults FALSE: the owner opens mint only after baseURI is set.
 /// - withdraw() (onlyOwner): sends the whole contract balance to the owner.

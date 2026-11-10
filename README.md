@@ -7,7 +7,7 @@ Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file sudah di-u
 - **Network:** BNB Chain (chain ID 56), gas BNB
 - **NFT:** Talvio Pixel Relic, 7.777 token, pixel art 16-bit (Owl, Raven, Deer, Fox)
 - **Mint:** 777 pertama gratis untuk pemegang Binance Agent ID (1 per Agent ID), sisanya **0.0015 BNB** per Relic, maks **5 per wallet**
-- **Token $TALV:** supply 7,77 triliun, 82% ke LP — **kontrak token $TALV dibuat sendiri oleh pemilik proyek, bukan bagian dari paket ini**
+- **Token $TALV:** supply tetap 7,77 triliun (7.770.000.000.000), 18 desimal, seluruh supply di-mint ke wallet pemilik saat deploy — kontraknya **termasuk di paket ini** (`contract/TalvioToken.sol`), di-deploy dari halaman deploy yang sama (langkah 05). Pembagian sesuai tokenomics: 82% LP · 10% top inviters · 8% treasury (dieksekusi pemilik dari wallet-nya).
 - **Kontrak NFT: BELUM DI-DEPLOY.** Mint masih tertutup (`mintOpen` = false) sampai kontrak di-deploy dan dibuka.
 - **Metadata SUDAH DI-HOST** di repo ini (`nft/meta/` + `nft/images/`), dan field `image` di semua metadata sudah berupa URL absolut. `baseURI` untuk `setBaseURI`: `https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/meta/` (sudah terisi otomatis di halaman deploy, langkah 3).
 
@@ -21,6 +21,9 @@ Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file sudah di-u
 | `contract/TalvioBNB.sol` | Source kontrak NFT ERC-721 "Talvio Pixel Relic" (TALV) |
 | `contract/TalvioBNB.json` | Hasil compile (ABI + bytecode) |
 | `contract/compile-bnb.js` | Script compile kontrak |
+| `contract/TalvioToken.sol` | Source kontrak token ERC-20 "$TALV" (Talvio, supply tetap 7,77 triliun) |
+| `contract/TalvioToken.json` | Hasil compile token (ABI + bytecode) |
+| `contract/compile-token.js` | Script compile token |
 | `nft/images/` | 7.777 gambar NFT (1.png – 7777.png, 512×512) |
 | `nft/meta/` | 7.777 metadata JSON (1.json – 7777.json) |
 | `nft/masters/` | 4 master pixel art (Owl, Raven, Deer, Fox) |
