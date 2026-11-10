@@ -1,6 +1,6 @@
 # Talvio — Paket Lengkap (BNB Chain)
 
-Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file lokal — **belum di-upload, belum live, belum di-deploy**.
+Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file sudah di-upload ke repo GitHub `talvio-io/Talviobnb` — **kontrak belum di-deploy, mint belum live**.
 
 ## Fakta kunci
 
@@ -9,7 +9,7 @@ Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file lokal — 
 - **Mint:** 777 pertama gratis untuk pemegang Binance Agent ID (1 per Agent ID), sisanya **0.0015 BNB** per Relic, maks **5 per wallet**
 - **Token $TALV:** supply 7,77 triliun, 82% ke LP — **kontrak token $TALV dibuat sendiri oleh pemilik proyek, bukan bagian dari paket ini**
 - **Kontrak NFT: BELUM DI-DEPLOY.** Mint masih tertutup (`mintOpen` = false) sampai kontrak di-deploy dan dibuka.
-- **Metadata BELUM DI-HOST.** `baseURI` di halaman deploy masih kosong. Hosting 7.777 gambar + metadata harus disiapkan dulu sebelum `setBaseURI`.
+- **Metadata SUDAH DI-HOST** di repo ini (`nft/meta/` + `nft/images/`), dan field `image` di semua metadata sudah berupa URL absolut. `baseURI` untuk `setBaseURI`: `https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/meta/` (sudah terisi otomatis di halaman deploy, langkah 3).
 
 ## Isi paket
 
@@ -31,10 +31,10 @@ Paket lengkap Talvio: website, NFT 7.777, dan kontrak BNB. Semua file lokal — 
 
 1. **Lihat website:** buka `index.html` di browser.
 2. **Deploy kontrak:** buka `deploy-bnb.html`, hubungkan wallet (OKX dideteksi dulu), ikuti langkah Connect → Deploy → Check → Set baseURI → Open Mint.
-3. **Sebelum mint dibuka:** host dulu folder `nft/images/` + `nft/meta/` di tempat yang bisa diakses publik, lalu isi `baseURI` di halaman deploy dengan URL hosting tersebut (contoh: `https://domain-kamu/nft/meta/`).
+3. **Sebelum mint dibuka:** jalankan langkah Set baseURI di halaman deploy — URL metadata repo sudah terisi otomatis (`https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/meta/`).
 4. **Withdraw fee:** buka `withdraw-bnb.html` dengan wallet owner kontrak.
 
 ## Catatan
 
 - Paket Elysium (Kinetiq 99901) sudah **dihapus** atas permintaan pemilik — Talvio pakai BNB saja.
-- File-file di paket ini adalah salinan dari sumber lokal; file asli NFT tetap ada di `~/workspace/talvio/full/` dan kontrak BNB di `~/workspace/talvio-bnb/`.
+- File-file di repo ini adalah salinan kerja yang dipakai untuk deploy.
