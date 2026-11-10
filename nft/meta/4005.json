@@ -1,7 +1,7 @@
 {
   "name": "Talvio Pixel Relic #4005",
-  "description": "Talvio Pixel Relic #4005 \u2014 a unique 16-bit pixel fox from the Talvio Pixel Relics collection on BNB Chain.",
-  "image": "images/4005.png",
+  "description": "Talvio Pixel Relic #4005 — a unique 16-bit pixel fox from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/images/4005.png",
   "attributes": [
     {
       "trait_type": "Animal",
