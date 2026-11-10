@@ -4,7 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<link rel="icon" href="data:,">
+<meta name="description" content="Talvio Pixel Relic (TALV IO) — 7,777 Genesis Relics on BNB Chain. First 777 free for Binance Agent ID holders. Every mint draws a random Relic.">
+<meta name="theme-color" content="#060913">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TALV IO">
+<meta property="og:title" content="TALVIO — Talvio Pixel Relic · 7,777 Genesis Relics on BNB Chain">
+<meta property="og:description" content="First 777 FREE for Binance Agent ID holders — every mint draws a random Relic. No sniping: a Legendary can land in any wallet.">
+<meta property="og:url" content="https://talv.site/">
+<meta property="og:image" content="https://talv.site/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TALVIO golden owl emblem — Talvio Pixel Relic">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TALVIO — Talvio Pixel Relic · 7,777 Genesis Relics on BNB Chain">
+<meta name="twitter:description" content="First 777 FREE for Binance Agent ID holders — every mint draws a random Relic. No sniping: a Legendary can land in any wallet.">
+<meta name="twitter:image" content="https://talv.site/og-image.png">
+<meta name="twitter:image:alt" content="TALVIO golden owl emblem — Talvio Pixel Relic">
 <title>Talvio — Pixel Relics on BNB Chain</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +62,7 @@ button{font-family:inherit;cursor:pointer}
 header{position:sticky;top:0;z-index:60;background:rgba(6,9,19,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:18px;height:68px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-d);font-weight:900;font-size:20px;letter-spacing:.06em}
-.logo .gem{width:34px;height:34px;flex:none}
+.logo .gem{width:34px;height:34px;flex:none;border-radius:9px;box-shadow:0 0 0 1px rgba(255,201,77,.35)}
 .logo em{font-style:normal;color:var(--lime)}
 .navlinks{display:flex;gap:4px;margin-left:14px}
 .navlinks a{text-decoration:none;font-size:13.5px;font-weight:600;color:var(--muted);padding:8px 11px;border-radius:99px}
@@ -326,7 +346,7 @@ footer{padding:56px 0 0}
 <header>
   <div class="wrap nav">
     <a class="logo" href="#top">
-      <svg class="gem" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="2" fill="#00e5b0"/><rect x="3" y="3" width="10" height="2" fill="#3ee6ff"/><rect x="4" y="5" width="8" height="2" fill="#00e5b0"/><rect x="5" y="7" width="6" height="2" fill="#3ee6ff"/><rect x="6" y="9" width="4" height="2" fill="#00e5b0"/><rect x="7" y="11" width="2" height="2" fill="#b8ff3c"/><rect x="7" y="13" width="2" height="2" fill="#b8ff3c"/></svg>
+      <img class="gem" src="/logo-mark.png" alt="TALV IO logo" width="34" height="34">
       TALV<em>IO</em>
     </a>
     <nav class="navlinks">
@@ -597,7 +617,7 @@ footer{padding:56px 0 0}
   <footer><div class="wrap" style="padding:0">
     <div class="foot-grid">
       <div>
-        <a class="logo" href="#top"><svg class="gem" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="6" height="2" fill="#00e5b0"/><rect x="3" y="3" width="10" height="2" fill="#3ee6ff"/><rect x="4" y="5" width="8" height="2" fill="#00e5b0"/><rect x="5" y="7" width="6" height="2" fill="#3ee6ff"/><rect x="6" y="9" width="4" height="2" fill="#00e5b0"/><rect x="7" y="11" width="2" height="2" fill="#b8ff3c"/><rect x="7" y="13" width="2" height="2" fill="#b8ff3c"/></svg>TALV<em>IO</em></a>
+        <a class="logo" href="#top"><img class="gem" src="/logo-mark.png" alt="TALV IO logo" width="34" height="34">TALV<em>IO</em></a>
         <p class="foot-tag">Pixel Relics — 16-bit sprites from a new era, on BNB Chain.</p>
       </div>
       <div>
@@ -684,6 +704,11 @@ function setTab(name,btn){document.querySelectorAll('.tabs button').forEach(func
 function toggleFaq(btn){btn.parentElement.classList.toggle('open')}
 /* init */
 paintChips('chips',1);paintChips('chips2',1);updateMint();genPrompt();updLadder();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+}
 </script>
 </body>
 </html>
