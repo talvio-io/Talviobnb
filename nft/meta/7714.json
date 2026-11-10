@@ -1,7 +1,7 @@
 {
   "name": "Talvio Pixel Relic #7714",
-  "description": "Talvio Pixel Relic #7714 \u2014 a unique 16-bit pixel owl from the Talvio Pixel Relics collection on BNB Chain.",
-  "image": "images/7714.png",
+  "description": "Talvio Pixel Relic #7714 — a unique 16-bit pixel owl from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/images/7714.png",
   "attributes": [
     {
       "trait_type": "Animal",

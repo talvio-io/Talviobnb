@@ -1,7 +1,7 @@
 {
   "name": "Talvio Pixel Relic #7091",
-  "description": "Talvio Pixel Relic #7091 \u2014 a unique 16-bit pixel raven from the Talvio Pixel Relics collection on BNB Chain.",
-  "image": "images/7091.png",
+  "description": "Talvio Pixel Relic #7091 — a unique 16-bit pixel raven from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/images/7091.png",
   "attributes": [
     {
       "trait_type": "Animal",
