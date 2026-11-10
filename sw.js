@@ -1,7 +1,7 @@
 /* TALV IO service worker — installability + offline shell.
    Conservative by design: navigations are network-first (the live mint page
    is never trapped behind a stale cache), only the app shell is precached. */
-const CACHE = 'talvio-v1';
+const CACHE = 'talvio-v2';
 const CORE = ['/', '/index.html', '/manifest.webmanifest', '/logo-mark.png', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (e) => {
