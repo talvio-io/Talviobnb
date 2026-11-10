@@ -422,8 +422,8 @@ footer{padding:56px 0 0}
 <section id="cara"><div class="wrap">
   <div class="sec-head"><span class="sec-num">02 / HOW IT WORKS</span><h2>Three steps to the pool</h2></div>
   <div class="steps">
-    <div class="step"><div class="sn">01</div><div class="range">#1 — #777 · FREE</div><h3>Claim</h3><p>Free, <b>1 Relic per Agent ID</b>: 48,888,800 $TALV per claim. Paid minting opens only after all 777 free claims are gone.</p></div>
-    <div class="step"><div class="sn">02</div><div class="range">#778 — #7,777 · 0.0015 BNB</div><h3>Mint</h3><p><b>0.0015 BNB</b> per Relic, max <b>5 per wallet</b> (+1 quota for every friend you invite who paid-mints).</p></div>
+    <div class="step"><div class="sn">01</div><div class="range">FIRST 777 CLAIMS · FREE</div><h3>Claim</h3><p>Free, <b>1 Relic per Agent ID</b>: 48,888,800 $TALV per claim. Paid minting runs in parallel from the very start — it never waits for the free claims to finish.</p></div>
+    <div class="step"><div class="sn">02</div><div class="range">OPEN FROM #1 · 0.0015 BNB</div><h3>Mint</h3><p><b>0.0015 BNB</b> per Relic, max <b>5 per wallet</b> (+1 quota for every friend you invite who paid-mints). The <b>488,888,000 $TALV</b> lands in your wallet in the same transaction as the mint.</p></div>
     <div class="step"><div class="sn">03</div><div class="range">#7,777 · AUTOMATIC</div><h3>Pool Opens</h3><p>The same transaction pairs <b>8.61 BNB</b> (82% of the 10.5 BNB total genesis funds) with $TALV on PancakeSwap V2 and <b>burns the LP</b>. After that, the price ladder opens for everyone.</p></div>
   </div>
   <p class="steps-note">Genesis funds: 82% liquidity · 10% for the top 100 inviters · 8% treasury. <a href="#whitepaper">Read the whitepaper →</a></p>
@@ -462,14 +462,14 @@ footer{padding:56px 0 0}
         <div><div class="tk">+ NFT Relic</div><div class="tv" id="nftV">× 1</div></div>
       </div>
       <button class="cta" onclick="toast('Connect your wallet first — the Talvio contract is not deployed yet; this is a mint preview.')"><span>Connect wallet to mint</span><span>→</span></button>
-      <div class="freebox"><b>Free claim · #1–#777</b> — 1 per Agent ID · 48,888,800 $TALV<br><span class="done">LIVE STATUS APPEARS AFTER CONTRACT DEPLOYMENT</span></div>
+      <div class="freebox"><b>Free claim · first 777 claims</b> — 1 per Agent ID · 48,888,800 $TALV<br><span class="done">LIVE STATUS APPEARS AFTER CONTRACT DEPLOYMENT</span></div>
       <div class="mini-grid">
         <div>Agent ID<div class="mv">Connect first</div></div>
         <div>Quota left<div class="mv" id="quotaV">5</div></div>
         <div>Paid Relics<div class="mv">—</div></div>
         <div>Balance<div class="mv">—</div></div>
       </div>
-      <p class="fineprint">$TALV cannot be transferred before the pool opens. Excess BNB is refunded in the same transaction. Network: BNB Chain · gas BNB.</p>
+      <p class="fineprint">$TALV lands in your wallet in the same transaction as your mint — no waiting for the pool to open. Network: BNB Chain · gas BNB.</p>
     </div>
   </div>
 </div></section>
@@ -596,13 +596,13 @@ footer{padding:56px 0 0}
       <div class="wprow"><div class="wk">Genesis funds</div><div class="wv">82% liquidity · 10% top inviters · 8% treasury</div></div>
       <div class="wprow"><div class="wk">Liquidity</div><div class="wv">2,806,217,120,000 $TALV + 8.61 BNB paired on PancakeSwap V2 when #7,777 is minted · opening price = genesis mint cost · <b>LP burned</b></div></div>
       <div class="wprow"><div class="wk">Ladder mint</div><div class="wv">From 0.0020 BNB, +0.0004 BNB every 400 Relics, up to #1,200,000 · 100% goes to treasury</div></div>
-      <div class="wprow"><div class="wk">Transfer</div><div class="wv">$TALV cannot be transferred before the pool opens.</div></div>
+      <div class="wprow"><div class="wk">Transfer</div><div class="wv">$TALV is a standard ERC-20 — it lands in your wallet at mint and is transferable immediately.</div></div>
       <div class="wprow"><div class="wk">Trading tax</div><div class="wv">2% buy &amp; 2% sell to treasury in BNB. First 15 minutes after the pool opens: 5% buy &amp; 30% sell.</div></div>
       <div class="wprow"><div class="wk">30-day rule</div><div class="wv">If #7,777 is not reached within 30 days of the sale start, minting stops and only the treasury address can withdraw the held BNB for liquidity &amp; the inviter pool.</div></div>
     </div>
     <div class="wp-card" id="tab-faq" style="display:none">
       <div class="faq-item open"><button class="faq-q" onclick="toggleFaq(this)">What is a Talvio Relic? <span class="pl">+</span></button><div class="faq-a">A Talvio Relic is a genesis-edition 16-bit pixel art NFT. Every Relic you mint gives you a 1/1 NFT plus a $TALV allocation based on the mint phase — free, paid, or ladder.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Who can claim for free? <span class="pl">+</span></button><div class="faq-a">The first 777 minters. One Agent ID can claim only 1 free Relic from #1–#777, and that claim counts toward the max 5 per wallet limit.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Who can claim for free? <span class="pl">+</span></button><div class="faq-a">Holders of a Binance Agent ID — the first 777 free claims. One Agent ID can claim only 1 free Relic, and that claim counts toward the max 5 per wallet limit. Paid minting is separate: open to everyone from the start, it never waits for the free claims.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the max mint per wallet? <span class="pl">+</span></button><div class="faq-a">A maximum of 5 Relics per wallet during genesis. Each valid invite (a friend paid-mints naming you as inviter) adds +1 quota.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When does the pool open? <span class="pl">+</span></button><div class="faq-a">Automatically in the same transaction when Relic #7,777 is minted. The pool on PancakeSwap V2 goes live immediately and its LP tokens are burned, so the liquidity can never be pulled by anyone.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can an AI Agent mint for me? <span class="pl">+</span></button><div class="faq-a">Yes. Use the prompt generator in the Agent Mint section: enter your wallet address, copy the prompt, and paste it into your Binance Agent. The Agent still follows the max 5 limit and the per-Relic price.</div></div>
@@ -665,7 +665,7 @@ buildChips('chips',setQty);buildChips('chips2',function(v){agentQty=v;paintChips
 function genPrompt(){
   var w=(document.getElementById('walletInput').value||'').trim()||'0x…(enter your Agent wallet address)';
   var total=fmtDec(agentQty*PRICE_BNB,4);
-  var txt='You are my Binance Agent. Mint TALVIO Genesis Relics on BNB Chain for wallet '+w+'.\n\nRules:\n- Amount: '+agentQty+' Relics (max 5 per wallet, the free Agent claim counts toward it)\n- Price: 0.0015 BNB per Relic — total '+total+' BNB. Abort if the price per Relic is higher.\n- Each Relic grants 488,888,000 $TALV + 1 Talvio Relic NFT.\n- Show a preview (amount, total BNB, destination wallet) and wait for my confirmation before sending the transaction.\n- After success, report the Relic number and the transaction hash.';
+  var txt='You are my Binance Agent. Mint TALVIO Genesis Relics on BNB Chain for wallet '+w+'.\n\nRules:\n- Amount: '+agentQty+' paid Relics (max 5 per wallet in total; a free Agent claim counts toward it)\n- Price: 0.0015 BNB per Relic — total '+total+' BNB. Paid minting is open right away; it does not wait for the free claims to finish. Abort if the price per Relic is higher.\n- Each paid Relic grants 488,888,000 $TALV, delivered to the wallet in the same transaction as the mint, plus 1 Talvio Relic NFT. If this wallet holds a Binance Agent ID and has not used its free claim, it can also claim 1 free Relic (separate transaction, 0 BNB) granting 48,888,800 $TALV.\n- Show a preview (amount, total BNB, destination wallet) and wait for my confirmation before sending the transaction.\n- After success, report the Relic number and the transaction hash.';
   document.getElementById('promptOut').value=txt;
 }
 document.getElementById('walletInput').addEventListener('input',genPrompt);
