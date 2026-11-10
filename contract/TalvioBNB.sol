@@ -14,9 +14,9 @@ interface IAgentId {
 /// This replaces the deleted Elysium build (TalvioElysium.sol, moved to the
 /// recoverable trash 2026-11-09 at owner request "Kontrak juga hapus pakai bnb
 /// aaja"). The Elysium contract was never deployed, so nothing is lost on-chain.
-/// The 7,777 pixel images + metadata already exist locally at
-/// ~/workspace/talvio/full/ (NOT hosted yet) — baseURI must point at the
-/// hosted metadata URL once hosting is decided; do NOT invent one.
+/// The 7,777 pixel images + metadata are hosted in the GitHub repo
+/// (talvio-io/Talviobnb: nft/images + nft/meta); baseURI points at the
+/// raw.githubusercontent meta URL.
 /// @notice Rules (Talvio's original BNB design, immutable in this contract except where noted):
 /// - MAX_SUPPLY 7,777.
 /// - FREE_LIMIT 777: the first 777 tokens minted are FREE (fee 0) — but ONLY
@@ -29,6 +29,16 @@ interface IAgentId {
 ///   paid mint is open to ANY personal wallet.
 /// - MAX_PER_WALLET 5: no wallet may mint more than 5 tokens in total
 ///   (free + paid combined). This is the site's "max 5/wallet".
+/// - RANDOM DRAW: token IDs are NOT minted in order. Each mint draws its
+///   token IDs at random from the pool of not-yet-minted IDs (1..7777), so
+///   nobody can predict or snipe a specific Relic (e.g. a Legendary whose
+///   metadata is publicly known). The pool is a virtual array with
+///   swap-remove draws: every ID is drawn exactly once and no 7,777-entry
+///   array is ever stored. Randomness is on-chain pseudo-randomness
+///   (blockhash + timestamp + sender + a rolling nonce), the same style as
+///   other agent-mint pools — it is not Chainlink VRF. The free/paid phases
+///   depend only on HOW MANY tokens have minted (totalMinted), never on
+///   which ID a draw returns.
 /// - Paid fee: PAID_FEE = 0.0015 BNB per token after the free 777.
 /// - Fees are HELD in the contract (not forwarded). The owner collects
 ///   accumulated fees with withdraw(). Network gas is separate and variable,
@@ -61,10 +71,20 @@ contract Talvio is ERC721, Ownable {
     mapping(address => uint256) public mintedByWallet;
     mapping(address => uint256) public freeMintedByWallet;
 
+    /// @notice Token IDs still in the draw pool (MAX_SUPPLY - totalMinted).
+    uint256 public remaining;
+    /// @notice Virtual draw pool: _pool[i] is the token ID at pool position i,
+    /// where 0 means "identity" (position i holds token ID i + 1). Draws are
+    /// swap-remove, so the mapping stays sparse and draws cost O(1).
+    mapping(uint256 => uint256) private _pool;
+    uint256 private _randNonce;
+
     event BaseURISet(string baseURI);
+    event Minted(address indexed wallet, uint256 indexed tokenId);
 
     constructor(string memory _baseURI) ERC721("Talvio Pixel Relic", "TALV") {
         baseURI = _baseURI;
+        remaining = MAX_SUPPLY;
     }
 
     /// @notice True when `wallet` holds at least one Binance Agent ID.
@@ -135,6 +155,33 @@ contract Talvio is ERC721, Ownable {
         return string(abi.encodePacked(_baseURI(), tokenId.toString(), ".json"));
     }
 
+    /// @notice Token ID stored at pool position `idx` (identity when unset).
+    function _poolIdAt(uint256 idx) internal view returns (uint256) {
+        uint256 v = _pool[idx];
+        return v == 0 ? idx + 1 : v;
+    }
+
+    /// @notice Draw one token ID at random from the remaining pool and remove
+    /// it (swap-remove: the last pool entry moves into the drawn slot).
+    function _draw() internal returns (uint256 tokenId) {
+        uint256 last = remaining - 1;
+        uint256 r = uint256(
+            keccak256(
+                abi.encodePacked(
+                    blockhash(block.number - 1),
+                    block.timestamp,
+                    msg.sender,
+                    _randNonce,
+                    totalMinted
+                )
+            )
+        ) % remaining;
+        _randNonce += 1;
+        tokenId = _poolIdAt(r);
+        _pool[r] = _poolIdAt(last);
+        remaining = last;
+    }
+
     function mint(uint256 qty) external payable {
         require(mintOpen, "mint closed");
         require(msg.sender == tx.origin, "no contracts");
@@ -155,9 +202,11 @@ contract Talvio is ERC721, Ownable {
         uint256 fee = (qty - freeCount) * PAID_FEE;
         require(msg.value == fee, "wrong fee");
         for (uint256 i = 0; i < qty; i++) {
+            uint256 tokenId = _draw();
             totalMinted += 1;
             mintedByWallet[msg.sender] += 1;
-            _safeMint(msg.sender, totalMinted);
+            _safeMint(msg.sender, tokenId);
+            emit Minted(msg.sender, tokenId);
         }
         freeMintedByWallet[msg.sender] += freeCount;
         // Fees stay in the contract; the owner collects them with withdraw().

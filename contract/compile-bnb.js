@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const solc = require('/home/hatch/workspace/contract-deploy/node_modules/solc');
-const dir = '/home/hatch/workspace/contract-deploy';
+const solc = require('/home/hatch/workspace/tools/solc0820/node_modules/solc');
+const dir = '/home/hatch/workspace/tools/solc0820';
 const sources = { 'TalvioBNB.sol': { content: fs.readFileSync(path.join(__dirname, 'TalvioBNB.sol'), 'utf8') } };
 const input = { language: 'Solidity', sources, settings: { optimizer: { enabled: true, runs: 200 }, outputSelection: { '*': { '*': ['abi', 'evm.bytecode.object', 'evm.deployedBytecode.object'] } } } };
 function findImports(p) { const full = path.join(dir, 'node_modules', p); if (fs.existsSync(full)) return { contents: fs.readFileSync(full, 'utf8') }; return { error: 'File not found: ' + p }; }
