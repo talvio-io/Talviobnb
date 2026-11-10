@@ -1,7 +1,7 @@
 {
   "name": "Talvio Pixel Relic #3464",
-  "description": "Talvio Pixel Relic #3464 \u2014 a unique 16-bit pixel deer from the Talvio Pixel Relics collection on BNB Chain.",
-  "image": "images/3464.png",
+  "description": "Talvio Pixel Relic #3464 — a unique 16-bit pixel deer from the Talvio Pixel Relics collection on BNB Chain.",
+  "image": "https://raw.githubusercontent.com/talvio-io/Talviobnb/main/nft/images/3464.png",
   "attributes": [
     {
       "trait_type": "Animal",
